@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KORRIGMER – Sekundarstufe I</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#FBFAF6;--surface:#ffffff;--ink:#211F1A;--muted:#746E5F;
+  --line:#E8E2D4;--line-strong:#DAD2BF;
+  --gold:#B6912E;--gold-d:#977519;--gold-tint:#FBF3DE;--gold-border:#EBDFBE;
+  --good:#2E7D4F;--bad:#B23B3B;
+  --shadow:0 1px 2px rgba(40,33,15,.04),0 8px 24px rgba(40,33,15,.05);
+  --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+.app-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 22px;background:var(--gold-tint);border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:5}
+.brand{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.14em;color:var(--gold-d);display:flex;align-items:center;gap:11px;line-height:1.15}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--gold-tint);flex:none}
+.brand small{display:block;font-family:var(--sans);font-size:10.5px;color:var(--muted);letter-spacing:.32px;text-transform:uppercase;margin-top:2px;font-weight:600}
+
+.wrap{max-width:1000px;margin:0 auto;padding:32px 22px 90px}
+.wrap.narrow{max-width:560px}
+.screen{display:none}
+.screen.active{display:block;animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:var(--shadow);margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:600;font-size:27px;margin:0 0 6px;letter-spacing:.2px}
+.login-title{font-size:32px;line-height:1.18;margin-bottom:8px}
+.gold-word{color:var(--gold-d);letter-spacing:.04em}
+h2{font-family:var(--serif);font-weight:600;font-size:20px;margin:0 0 14px}
+h3{font-family:var(--serif);font-weight:600;font-size:17px;margin:0 0 13px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-d);font-weight:700;margin-bottom:9px}
+.lead{color:var(--muted);margin:0 0 18px;font-size:14.5px}
+
+label.field{display:block;margin-bottom:15px}
+label.field>span{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+label.field .hint{font-weight:400;color:var(--muted);font-size:12px}
+input[type=text],input[type=number],input[type=password],textarea,select{width:100%;font-family:inherit;font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--line-strong);border-radius:8px;padding:10px 12px;outline:none;transition:border-color .15s,box-shadow .15s}
+textarea{resize:vertical;min-height:46px;line-height:1.4}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-tint)}
+select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%23977519' stroke-width='1.6'/></svg>");background-repeat:no-repeat;background-position:right 11px center;padding-right:30px}
+
+.btn{appearance:none;font-family:inherit;font-size:14px;font-weight:600;border-radius:9px;padding:11px 18px;border:1px solid transparent;cursor:pointer;transition:.15s;letter-spacing:.2px}
+.btn.primary{background:var(--gold);color:#fff}
+.btn.primary:hover{background:var(--gold-d)}
+.btn.primary:disabled{background:#E4DECF;color:#A89F8B;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--gold-d);border-color:var(--line-strong)}
+.btn.ghost:hover{border-color:var(--gold);background:var(--gold-tint)}
+.btn.danger{background:#fff;color:var(--bad);border-color:#E6C9C9}
+.btn.danger:hover{background:#FBEDED}
+.btn.small{padding:7px 11px;font-size:12.5px}
+.btn.link{background:none;border:none;color:var(--muted);padding:6px 2px;font-weight:500;cursor:pointer}
+.btn.link:hover{color:var(--gold-d);text-decoration:underline}
+
+.row-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.spacer{flex:1}
+.muted{color:var(--muted)}
+.small{font-size:12.5px}
+.error{color:var(--bad);font-size:13px;margin-top:10px;white-space:pre-line;line-height:1.5}
+.note{background:var(--gold-tint);border:1px solid var(--gold-border);border-radius:9px;padding:13px 15px;font-size:13px;color:#6a5a2a;line-height:1.55}
+
+details.help{margin-top:10px;border:1px solid var(--line);border-radius:9px;padding:0 14px;background:#fff}
+details.help summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--gold-d);padding:11px 0;list-style:none}
+details.help summary::-webkit-details-marker{display:none}
+details.help summary::before{content:"+ ";font-weight:700}
+details.help[open] summary::before{content:"– "}
+details.help .body{font-size:13px;color:var(--muted);padding:0 0 14px;line-height:1.6}
+details.help code{background:var(--gold-tint);padding:1px 5px;border-radius:4px;color:#6a5a2a;font-size:12.5px}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table.grid{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+table.grid th,table.grid td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.grid thead th{background:var(--gold-tint);font-size:12px;color:#6a5a2a;font-weight:700;border-bottom:2px solid #E6D5A8}
+table.grid tbody tr:last-child td{border-bottom:none}
+
+.betable{min-width:0;width:100%}
+.betable td{border:none;padding:7px 4px}
+.be-label{font-weight:600;width:130px;white-space:nowrap}
+.be-input{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.be-input input{max-width:120px}
+.be-unit{color:var(--muted);font-size:13.5px}
+
+.col-krit{width:29%}.col-ein{width:29%}.col-erf{width:19%}.col-gew{width:19%}.col-del{width:1%;white-space:nowrap}
+.krit{min-height:44px}
+.gewcell{white-space:nowrap}
+.gewcell input.gew{max-width:80px;display:inline-block}
+.pct{margin-left:6px;color:var(--muted);font-weight:600}
+.wsum{font-weight:700;font-size:12px;margin-top:7px;line-height:1.3}
+.wsum.ok{color:var(--good)}
+.wsum.bad{color:var(--bad)}
+.einordnung{font-size:13px;color:var(--muted);line-height:1.45}
+.einordnung.fb-great{color:#2E7D4F}
+.einordnung.fb-good{color:#3F7A3F}
+.einordnung.fb-ok{color:#8A6D12}
+.einordnung.fb-low{color:#9A5A12}
+.einordnung.fb-fail{color:#B23B3B}
+.task-title .muted{font-family:var(--sans);font-size:13px;font-weight:500}
+.add-row{margin-top:13px}
+
+.fi-box{margin-top:12px;font-size:15px;padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:9px}
+.fi-box .muted{font-size:13.5px}
+
+.summary td.num,.summary th.num{text-align:right;font-variant-numeric:tabular-nums}
+.summary tr.total td{border-top:2px solid #E6D5A8;font-size:15px}
+.res-fi{font-size:15px;margin:14px 0}
+.note-without{color:#A49C8A;font-size:15px;margin:4px 0 2px}
+.final{font-family:var(--serif);font-size:20px;margin-top:8px}
+.final .big{font-size:42px;font-weight:700;color:var(--gold-d);margin:0 5px;line-height:1}
+
+.imp-ok{color:var(--good);font-size:13px;margin-top:10px;line-height:1.5}
+.imp-bad{color:var(--bad);font-size:13px;margin-top:10px;line-height:1.5}
+
+.modal{position:fixed;inset:0;background:rgba(33,28,12,.44);display:none;align-items:center;justify-content:center;padding:20px;z-index:40}
+.modal.open{display:flex;animation:fade .2s ease both}
+.modal .box{background:#fff;border-radius:14px;max-width:430px;width:100%;padding:26px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.modal .box h3{margin-bottom:8px}
+.modal .box p{color:var(--muted);font-size:14px;margin:0 0 20px}
+.modal .box .row-actions{justify-content:flex-end}
+
+.page-footer{text-align:center;color:#9a9384;font-size:12px;padding:22px 16px 30px;border-top:1px solid var(--line);background:var(--bg)}
+
+@media(max-width:640px){
+  .wrap{padding:22px 14px 80px}
+  .card{padding:18px}
+  h1{font-size:23px}
+  .login-title{font-size:25px}
+  .final .big{font-size:34px}
+}
+</style>
+</head>
+<body>
+
+<header class="app-header" style="display:none">
+  <div class="brand"><span class="dot"></span><span>KORRIGMER<small>Sekundarstufe I</small></span></div>
+  <button class="btn link" id="btn-logout" type="button">Abmelden</button>
+</header>
+
+<!-- ============ ANMELDEN ============ -->
+<section class="screen active" id="screen-login">
+  <div class="wrap narrow">
+    <div class="card">
+      <div class="eyebrow">Anmeldung</div>
+      <h1 class="login-title">Willkommen beim Tool <span class="gold-word">KORRIGMER – Sekundarstufe I</span>!</h1>
+      <p class="lead">Bitte melde dich als Lehrkraft an, um eine Korrektur anzulegen.</p>
+
+      <label class="field"><span>Vorname</span>
+        <input type="text" id="in-firstname" autocomplete="off" placeholder="z.&nbsp;B. Jan-Rickmer"></label>
+
+      <label class="field"><span>Nachname</span>
+        <input type="text" id="in-lastname" autocomplete="off" placeholder="z.&nbsp;B. Feindt"></label>
+
+      <label class="field"><span>Erste drei Buchstaben des Nachnamens</span>
+        <input type="text" id="in-initials" autocomplete="off" maxlength="8" placeholder="z.&nbsp;B. Sch"></label>
+
+      <label class="field"><span>Code</span>
+        <input type="text" id="in-code" inputmode="numeric" autocomplete="off" placeholder="Zahlenfolge"></label>
+
+      <div class="row-actions"><button class="btn primary" id="btn-login" type="button">Anmelden</button></div>
+      <div class="error" id="login-error"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EINRICHTEN ============ -->
+<section class="screen" id="screen-setup">
+  <div class="wrap narrow">
+    <div class="card">
+      <div class="eyebrow">Schritt 1 · Klassenarbeit / Leistungsnachweis einrichten</div>
+      <h1 id="greet">Hallo!</h1>
+      <p class="lead">Lege hier eine neue Korrektur an – oder lade eine bereits begonnene Rückmeldung, um nahtlos weiterzumachen.</p>
+    </div>
+
+    <div class="card">
+      <h3>Begonnene Rückmeldung laden <span class="muted" style="font-weight:500;font-size:13px">(optional)</span></h3>
+      <p class="muted small" style="margin-top:-4px">Hast du gestern bereits eine Schüler-PDF mit diesem Werkzeug erstellt? Lade sie hier hoch – Kriterien, Gewichtungen und alle Werte werden im nächsten Schritt automatisch wieder eingetragen.</p>
+      <input type="file" id="imp-file" accept="application/pdf,.pdf">
+      <div id="imp-status"></div>
+    </div>
+
+    <div class="card">
+      <h3>Angaben zur Klassenarbeit / zum Leistungsnachweis</h3>
+      <label class="field"><span>Wie heißt die Klasse, für die du eine Korrektur anlegen möchtest?</span>
+        <input type="text" id="in-class" autocomplete="off" placeholder="z.&nbsp;B. 8b"></label>
+      <label class="field"><span>Unterrichtsfach</span>
+        <input type="text" id="in-subject" autocomplete="off" placeholder="z.&nbsp;B. Politik und Wirtschaft"></label>
+      <label class="field"><span>Jahrgang</span>
+        <select id="in-grade">
+          <option value="">– bitte wählen –</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select></label>
+      <label class="field"><span>Wie viele Aufgaben hat die Klassenarbeit / der Leistungsnachweis?</span>
+        <input type="number" id="in-numtasks" min="1" step="1" placeholder="Anzahl"></label>
+      <div id="be-table-wrap"></div>
+    </div>
+
+    <div class="card" id="gradekey-card">
+      <h3>Notenschlüssel</h3>
+      <p class="muted small" style="margin-top:-4px">Lege fest, ab welchem Anteil der erreichten Bewertungseinheiten welche Note gilt. Die Angabe erfolgt in Prozent; rechts wird der entsprechende Wert in Bewertungseinheiten angezeigt. Die Werte müssen von Note&nbsp;1 zu Note&nbsp;5 absteigend sein.</p>
+      <div class="table-wrap"><table class="grid gradekey" style="min-width:0">
+        <thead><tr><th>Note</th><th>Mindestanteil</th><th class="num">entspricht</th></tr></thead>
+        <tbody>
+          <tr><td>Note 1</td><td class="gewcell"><input type="number" class="gmin" data-grade="1" min="0" max="100" step="0.01" value="90"><span class="pct">%</span></td><td class="num gradebe" data-gbe="1">–</td></tr>
+          <tr><td>Note 2</td><td class="gewcell"><input type="number" class="gmin" data-grade="2" min="0" max="100" step="0.01" value="76"><span class="pct">%</span></td><td class="num gradebe" data-gbe="2">–</td></tr>
+          <tr><td>Note 3</td><td class="gewcell"><input type="number" class="gmin" data-grade="3" min="0" max="100" step="0.01" value="62"><span class="pct">%</span></td><td class="num gradebe" data-gbe="3">–</td></tr>
+          <tr><td>Note 4</td><td class="gewcell"><input type="number" class="gmin" data-grade="4" min="0" max="100" step="0.01" value="48"><span class="pct">%</span></td><td class="num gradebe" data-gbe="4">–</td></tr>
+          <tr><td>Note 5</td><td class="gewcell"><input type="number" class="gmin" data-grade="5" min="0" max="100" step="0.01" value="20"><span class="pct">%</span></td><td class="num gradebe" data-gbe="5">–</td></tr>
+          <tr><td>Note 6</td><td class="muted" data-g6text>alle Ergebnisse darunter</td><td class="num gradebe muted" data-gbe="6">–</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="row-actions">
+        <button class="btn primary" id="btn-toGrading" type="button">Weiter zur Bewertung</button>
+      </div>
+      <div class="error" id="setup-error"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEWERTEN ============ -->
+<section class="screen" id="screen-grading">
+  <div class="wrap">
+    <div class="card">
+      <div class="eyebrow">Schritt 2 · Bewertung</div>
+      <p class="muted small" id="grade-context" style="margin:0 0 14px"></p>
+      <label class="field"><span>Name der Schülerin / des Schülers</span>
+        <input type="text" id="in-studentname" autocomplete="off" placeholder="Vor- und Nachname"></label>
+      <div class="error" id="name-error"></div>
+    </div>
+
+    <div id="tasks-wrap"></div>
+
+    <div class="card" id="fi-card">
+      <h3>Fehlerindex</h3>
+      <label class="field"><span>Anzahl der sprachlichen Fehler</span>
+        <input type="number" id="in-errors" min="0" step="1" placeholder="0"></label>
+      <label class="field"><span>Anzahl der Wörter</span>
+        <input type="number" id="in-words" min="0" step="1" placeholder="0"></label>
+      <div class="note">Falls diese Klassenarbeit / dieser Leistungsnachweis nicht mit einem Fehlerindex bewertet wird, kann hier einfach in beide Felder 0 eingetragen werden.</div>
+      <div class="fi-box" id="fi-box"></div>
+    </div>
+
+    <div class="card">
+      <div class="row-actions">
+        <button class="btn primary" id="btn-anschauen" type="button">Rückmeldung anschauen</button>
+        <div class="spacer"></div>
+        <button class="btn link" id="btn-back-setup" type="button">Zurück zu den Einstellungen</button>
+        <button class="btn danger small" id="btn-reset" type="button">Alle Werte zurücksetzen und löschen</button>
+      </div>
+      <div class="error" id="anschauen-hint"></div>
+    </div>
+
+    <div class="card">
+      <div class="row-actions">
+        <button class="btn ghost" id="btn-reset-col3" type="button">Meine Einschätzungen zurücksetzen</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ERGEBNIS ============ -->
+<section class="screen" id="screen-results">
+  <div class="wrap">
+    <div class="card">
+      <div class="row-actions" style="margin-top:0">
+        <button class="btn ghost" id="btn-back-grading" type="button">← Zurück zum Eintragen</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Zusammenfassung</div>
+      <h2 id="res-student"></h2>
+      <div id="res-summary"></div>
+      <div class="res-fi" id="res-fi"></div>
+      <div class="note-without" id="res-note-without"></div>
+      <div class="final" id="res-final"></div>
+    </div>
+
+    <div class="card">
+      <label class="field"><span>(Optional) Falls du ergänzend ein schriftliches Feedback oder andere persönliche Worte an die Person richten möchtest, kannst du das hier tun. Der Text wird in das Rückmelde-Dokument eingepflegt.</span>
+        <textarea id="in-personal" rows="7" placeholder="Persönliche Worte / schriftliches Feedback (optional)…"></textarea></label>
+      <div class="row-actions" style="margin-top:0">
+        <button class="btn primary" id="btn-print" type="button">Rückmeldebogen speichern (und als Datei drucken können)</button>
+      </div>
+      <div class="note" style="margin-top:16px">Keiner korrigiert alles an einem Tag. Speichere die PDF eines Schülers an einem sicheren Ort. Wenn du morgen nicht alle Kriterien neu eingeben möchtest, kannst du diese Datei einfach im dafür vorgesehenen Feld nach der Startseite hochladen. Die Internetseite wird die Kriterien und eingetragenen Berechnungsinformationen extrahieren und für dich wieder eintragen, damit du mit der Klassenarbeit / dem Leistungsnachweis des nächsten Schülers gleichermaßen weitermachen kannst.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODAL: ZURÜCKSETZEN ============ -->
+<div class="modal" id="reset-modal">
+  <div class="box">
+    <h3>Wirklich alle Werte löschen?</h3>
+    <p>Alle eingetragenen Kriterien, Erfüllungsgrade, Gewichtungen sowie Name, Fehler- und Wörterzahl werden gelöscht. Die Aufgabenanzahl und die Bewertungseinheiten bleiben erhalten. Dieser Schritt kann nicht rückgängig gemacht werden.</p>
+    <div class="row-actions">
+      <button class="btn link" id="btn-reset-cancel" type="button">abbrechen</button>
+      <button class="btn danger" id="btn-reset-confirm" type="button">ja, löschen</button>
+    </div>
+  </div>
+</div>
+
+<footer class="page-footer">Copyright Jan-Rickmer Feindt</footer>
+
+<script>
+"use strict";
+
+/* ---------------- Hilfsfunktionen ---------------- */
+const $  = (s,r)=> (r||document).querySelector(s);
+const $$ = (s,r)=> [...(r||document).querySelectorAll(s)];
+function escHtml(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function escAttr(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function fmtNum(x){const n=Number(x)||0;return Number.isInteger(n)?String(n):String(Math.round(n*100)/100).replace(".",",");}
+function fmtFI(x){return (Math.round((Number(x)||0)*100)/100).toFixed(2).replace(".",",");}
+
+const PCTS=[0,20,27,33,40,45,50,55,60,65,70,75,80,85,90,95,100];
+
+function feedbackTier(sel){
+  if(sel===""||sel==null) return {text:"",cls:""};
+  const p=Number(sel);
+  if(p>=85) return {text:"Diese Erwartung wurde innerhalb des sehr guten Bereichs erfüllt (max. minimale Abzüge)",cls:"fb-great"};
+  if(p>=70) return {text:"Diese Erwartung wurde in einem guten Maße erfüllt.",cls:"fb-good"};
+  if(p>=55) return {text:"Diese Erwartung wurde im befriedigenden Maße erfüllt. Es sind einige Lücken erkennbar.",cls:"fb-ok"};
+  if(p>=45) return {text:"Diese Erwartung wurde im ausreichenden Bereich erfüllt. Es sind deutliche Lücken erkennbar.",cls:"fb-low"};
+  return {text:"Diese Erwartung wurde leider nicht im Bereich einer bestandenen Leistung erfüllt. Deutliche Lücken sind erkennbar.",cls:"fb-fail"};
+}
+const DEFAULT_GRADES={1:90,2:76,3:62,4:48,5:20};
+function gradeThresholds(){
+  const t={};
+  [1,2,3,4,5].forEach(g=>{ const v=Number(state.grades&&state.grades[g]); t[g]=isFinite(v)?v:DEFAULT_GRADES[g]; });
+  return t;
+}
+function gradeFromPercent(p,t){
+  if(p>=t[1]) return 1;
+  if(p>=t[2]) return 2;
+  if(p>=t[3]) return 3;
+  if(p>=t[4]) return 4;
+  if(p>=t[5]) return 5;
+  return 6;
+}
+function bandLo(g,t){ return g===6 ? 0 : t[g]; }
+function bandHi(g,t){ return g===1 ? 100 : t[g-1]; }
+function feiThirds(jahrgang, fi){
+  const g=Number(jahrgang);
+  if(g===10){ if(fi>=6.0) return 2; if(fi>=3.0) return 1; return 0; }
+  if(g===9){ if(fi>=6.5) return 2; if(fi>=3.5) return 1; return 0; }
+  return 0; // Jahrgänge 5–8: Fehlerindex deaktiviert
+}
+function fiIsActive(){ const g=Number(state.setup.grade); return g===9||g===10; }
+function roundHalf(x){ return Math.round(x*2)/2; }
+function fmtHalf(x){ const n=roundHalf(Number(x)||0); return Number.isInteger(n)? String(n) : String(n).replace(".",","); }
+function fmtPct(x){ return (Math.round((Number(x)||0)*10)/10).toString().replace(".",","); }
+function refreshSetupCalc(){
+  let totalBE=0; $$("[data-be]").forEach(inp=>{ totalBE += parseFloat(inp.value)||0; });
+  [1,2,3,4,5].forEach(g=>{
+    const inp=$('[data-grade="'+g+'"]'); const cell=$('[data-gbe="'+g+'"]');
+    if(!inp||!cell) return;
+    const pct=parseFloat(inp.value);
+    cell.textContent = (isNaN(pct)||totalBE<=0) ? "–" : (fmtHalf(pct/100*totalBE)+" BE");
+  });
+  const t5inp=$('[data-grade="5"]'); const t5=t5inp?parseFloat(t5inp.value):NaN;
+  const g6t=$("[data-g6text]"), g6be=$('[data-gbe="6"]');
+  if(g6t) g6t.textContent = isNaN(t5) ? "alle Ergebnisse darunter" : ("weniger als "+fmtNum(t5)+" %");
+  if(g6be) g6be.textContent = (isNaN(t5)||totalBE<=0) ? "–" : ("weniger als "+fmtHalf(t5/100*totalBE)+" BE");
+}
+
+/* ---------------- Zustand ---------------- */
+function initialState(){
+  return {
+    teacher:{firstName:"",lastName:"",initials:"",code:""},
+    setup:{className:"",subject:"",grade:"",numTasks:0},
+    grades:{1:"90",2:"76",3:"62",4:"48",5:"20"},
+    tasks:[],           // {be:Number, criteria:[{text,fulfillment,weight}]}
+    student:{name:""},
+    errors:{count:"",words:""}
+  };
+}
+let state = initialState();
+
+/* ---------------- Anmeldung ---------------- */
+function translit(s){
+  return String(s).toLowerCase()
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+    .replace(/[^a-z]/g,"");
+}
+function expectedCode(initials){
+  const letters=translit(initials);
+  let code="";
+  for(const ch of letters){ code += (ch.charCodeAt(0)-96); }
+  return code;
+}
+function doLogin(){
+  const first=$("#in-firstname").value.trim();
+  const last =$("#in-lastname").value.trim();
+  const init =$("#in-initials").value.trim();
+  const code =$("#in-code").value.trim().replace(/\s+/g,"");
+  const err=$("#login-error"); err.textContent="";
+  if(!first){ err.textContent="Bitte den Vornamen eingeben."; return; }
+  if(!last){ err.textContent="Bitte den Nachnamen eingeben."; return; }
+  if(translit(init).length===0){ err.textContent="Bitte die ersten Buchstaben des Nachnamens eingeben."; return; }
+  if(!code){ err.textContent="Bitte den Code eingeben."; return; }
+  if(code !== expectedCode(init)){
+    err.textContent="Der Code ist nicht korrekt. Bitte prüfe deine Eingaben.";
+    return;
+  }
+  state.teacher.firstName=first;
+  state.teacher.lastName=last;
+  state.teacher.initials=init;
+  state.teacher.code=code;
+  buildSetup();
+  showScreen("setup");
+}
+
+/* ---------------- Einrichten ---------------- */
+function greetText(){ return "Willkommen, "+(state.teacher.firstName||"")+"!"; }
+
+function renderBeTable(n){
+  const current={};
+  $$("[data-be]").forEach(inp=>{ current[inp.dataset.be]=inp.value; });
+  let rows="";
+  for(let i=0;i<n;i++){
+    let be = (current[i]!=null) ? current[i] : (state.tasks[i] ? (state.tasks[i].be||"") : "");
+    if(be===0) be="";
+    rows += `<tr><td class="be-label">Aufgabe ${i+1}</td><td><div class="be-input"><input type="number" min="1" step="1" data-be="${i}" value="${be!==""&&be!=null?escAttr(be):""}"><span class="be-unit">Bewertungseinheiten gibt diese Aufgabe</span></div></td></tr>`;
+  }
+  $("#be-table-wrap").innerHTML = n>0 ? `<table class="grid betable"><tbody>${rows}</tbody></table>` : "";
+  refreshSetupCalc();
+}
+
+function buildSetup(){
+  $("#greet").textContent = greetText();
+  $("#in-class").value   = state.setup.className||"";
+  $("#in-subject").value = state.setup.subject||"";
+  $("#in-grade").value   = state.setup.grade||"";
+  $("#in-numtasks").value= state.setup.numTasks||"";
+  [1,2,3,4,5].forEach(g=>{ const inp=$('[data-grade="'+g+'"]'); if(inp) inp.value = (state.grades&&state.grades[g]!=null&&state.grades[g]!=="")? state.grades[g] : DEFAULT_GRADES[g]; });
+  renderBeTable(state.setup.numTasks||0);
+  refreshSetupCalc();
+}
+
+function serializeSetup(){
+  state.setup.className=$("#in-class").value.trim();
+  state.setup.subject =$("#in-subject").value.trim();
+  state.setup.grade   =$("#in-grade").value.trim();
+  state.grades = state.grades || {};
+  [1,2,3,4,5].forEach(g=>{ const inp=$('[data-grade="'+g+'"]'); if(inp) state.grades[g]=inp.value; });
+  const n=parseInt($("#in-numtasks").value)||0;
+  state.setup.numTasks=n;
+  const out=[];
+  for(let i=0;i<n;i++){
+    const beInp=$(`[data-be="${i}"]`);
+    const be = beInp ? (parseFloat(beInp.value)||0) : (state.tasks[i]?state.tasks[i].be:0);
+    let crit = state.tasks[i] ? state.tasks[i].criteria : null;
+    if(!crit || !crit.length) crit=[{text:"",fulfillment:"",weight:""}];
+    out.push({be:be, criteria:crit});
+  }
+  state.tasks=out;
+}
+
+function validateSetup(){
+  const r=[];
+  if(!$("#in-class").value.trim())   r.push("Bitte den Namen der Klasse eintragen.");
+  if(!$("#in-subject").value.trim()) r.push("Bitte das Unterrichtsfach eintragen.");
+  if(!$("#in-grade").value.trim())   r.push("Bitte den Jahrgang auswählen.");
+  const n=parseInt($("#in-numtasks").value)||0;
+  if(n<1) r.push("Bitte die Anzahl der Aufgaben eintragen (mindestens 1).");
+  else {
+    for(let i=0;i<n;i++){
+      const inp=$(`[data-be="${i}"]`);
+      const v=inp?parseFloat(inp.value):NaN;
+      if(!(v>0)){ r.push("Bitte für jede Aufgabe die erreichbaren Bewertungseinheiten eintragen (Aufgabe "+(i+1)+")."); break; }
+    }
+  }
+  const gv=[1,2,3,4,5].map(g=>{ const inp=$('[data-grade="'+g+'"]'); return inp?parseFloat(inp.value):NaN; });
+  if(gv.some(v=>isNaN(v)||v<0||v>100)) r.push("Bitte für die Noten 1–5 gültige Mindestprozentwerte (0–100) eintragen.");
+  else { let dec=true; for(let i=0;i<4;i++){ if(!(gv[i]>gv[i+1])) dec=false; } if(!dec) r.push("Die Mindestprozentwerte müssen von Note 1 zu Note 5 streng absteigend sein (z.\u00A0B. 90 > 76 > 62 > 48 > 20)."); }
+  return r;
+}
+
+/* ---------------- Bewerten ---------------- */
+function optionsHTML(sel){
+  let h='<option value=""'+((sel===""||sel==null)?" selected":"")+'>– bitte wählen –</option>';
+  PCTS.forEach(p=>{ h+='<option value="'+p+'"'+(String(sel)===String(p)?" selected":"")+'>'+p+' %</option>'; });
+  return h;
+}
+function rowHTML(taskIdx,c){
+  const fb=feedbackTier(c.fulfillment);
+  return `<tr class="krow">
+    <td><textarea class="krit" rows="2" placeholder="Kriterium beschreiben…">${escHtml(c.text||"")}</textarea></td>
+    <td class="einordnung ${fb.cls}">${escHtml(fb.text)}</td>
+    <td><select class="erf">${optionsHTML(c.fulfillment)}</select></td>
+    <td class="gewcell"><input type="number" class="gew" min="0" max="100" step="0.5" value="${(c.weight!==""&&c.weight!=null)?escAttr(c.weight):""}"><span class="pct">%</span></td>
+    <td><button type="button" class="btn danger small del-row">Kriterium löschen</button></td>
+  </tr>`;
+}
+function taskTableHTML(i,t){
+  const rows = (t.criteria&&t.criteria.length)?t.criteria:[{text:"",fulfillment:"",weight:""}];
+  let body=""; rows.forEach(c=>{ body+=rowHTML(i,c); });
+  return `<div class="card task" data-task="${i}">
+    <h3 class="task-title">Aufgabe ${i+1} <span class="muted">(${fmtNum(t.be)} erreichbare Bewertungseinheiten)</span></h3>
+    <div class="table-wrap"><table class="grid">
+      <thead><tr>
+        <th class="col-krit">Kriterium</th>
+        <th class="col-ein">Einordnung</th>
+        <th class="col-erf">Meiner Einschätzung nach in diesem Maße erfüllt</th>
+        <th class="col-gew">Gewichtung innerhalb der Aufgabe (Summe muss 100&nbsp;% ergeben)<div class="wsum"></div></th>
+        <th class="col-del"></th>
+      </tr></thead>
+      <tbody data-tbody="${i}">${body}</tbody>
+    </table></div>
+    <button type="button" class="btn ghost small add-row" data-add="${i}">+ Zeile und Kriterium hinzufügen</button>
+  </div>`;
+}
+function buildGrading(){
+  const s=state.setup;
+  $("#grade-context").textContent = [s.className,s.subject,(s.grade?("Jahrgang "+s.grade):"")].filter(Boolean).join("  ·  ");
+  const fc=$("#fi-card"); if(fc) fc.style.display = fiIsActive() ? "" : "none";
+  $("#in-studentname").value = state.student.name||"";
+  $("#in-errors").value = (state.errors.count!==""&&state.errors.count!=null)?state.errors.count:"";
+  $("#in-words").value  = (state.errors.words!==""&&state.errors.words!=null)?state.errors.words:"";
+  let html=""; state.tasks.forEach((t,i)=>{ html+=taskTableHTML(i,t); });
+  $("#tasks-wrap").innerHTML=html;
+  $("#name-error").textContent="";
+  refreshGrading();
+}
+function serializeGrading(){
+  state.student.name=$("#in-studentname").value;
+  state.errors.count=$("#in-errors").value;
+  state.errors.words=$("#in-words").value;
+  $$(".task").forEach((taskEl,i)=>{
+    const crit=[];
+    $$(".krow",taskEl).forEach(r=>{
+      crit.push({text:$(".krit",r).value, fulfillment:$(".erf",r).value, weight:$(".gew",r).value});
+    });
+    if(state.tasks[i]) state.tasks[i].criteria = crit.length?crit:[{text:"",fulfillment:"",weight:""}];
+  });
+}
+function updateErrorIndex(){
+  const e=Number($("#in-errors").value)||0, w=Number($("#in-words").value)||0;
+  const fi=w>0?e*100/w:0;
+  const thirds=feiThirds(state.setup.grade, fi);
+  const word = thirds===2 ? "zwei Drittel der Note werden abgezogen" : thirds===1 ? "ein Drittel der Note wird abgezogen" : "kein Abzug";
+  $("#fi-box").innerHTML = "Fehlerindex: <strong>"+fmtFI(fi)+"</strong> <span class=\"muted\">("+word+")</span>";
+}
+function refreshGrading(){
+  $$(".krow").forEach(r=>{
+    const fb=feedbackTier($(".erf",r).value);
+    const cell=$(".einordnung",r);
+    cell.textContent=fb.text; cell.className="einordnung "+fb.cls;
+  });
+  $$(".task").forEach(taskEl=>{
+    const active=$$(".krow",taskEl).filter(r=>$(".krit",r).value.trim()!=="");
+    let sum=0; active.forEach(r=>{ sum += parseFloat($(".gew",r).value)||0; });
+    const el=$(".wsum",taskEl);
+    const ok=Math.abs(sum-100)<0.001;
+    el.textContent="Gewichtungssumme: "+fmtNum(sum)+" %";
+    el.classList.toggle("ok",ok);
+    el.classList.toggle("bad",!ok);
+  });
+  updateErrorIndex();
+  updateAnschauen();
+}
+function updateAnschauen(){
+  const reasons=[];
+  if($("#in-studentname").value.trim()==="") reasons.push("Bitte den Namen der Schülerin/des Schülers eintragen.");
+  let weightsOk=true, dropOk=true, hasCrit=true;
+  $$(".task").forEach(taskEl=>{
+    const active=$$(".krow",taskEl).filter(r=>$(".krit",r).value.trim()!=="");
+    if(active.length===0) hasCrit=false;
+    let sum=0; active.forEach(r=>{ sum += parseFloat($(".gew",r).value)||0; });
+    if(Math.abs(sum-100)>=0.001) weightsOk=false;
+    active.forEach(r=>{ if($(".erf",r).value==="") dropOk=false; });
+  });
+  if(!hasCrit)   reasons.push("Bitte in jeder Aufgabe mindestens ein Kriterium eintragen.");
+  if(!weightsOk) reasons.push("Bitte prüfe, ob die Gewichtung in jeder Aufgabe korrekt eingetragen ist und in Summe 100&nbsp;% ergibt.");
+  if(!dropOk)    reasons.push("Bitte für jedes Kriterium einen Erfüllungsgrad auswählen.");
+  const ok=reasons.length===0;
+  $("#btn-anschauen").disabled=!ok;
+  $("#anschauen-hint").innerHTML = ok ? "" : reasons.map(x=>"• "+x).join("<br>");
+}
+
+/* ---------------- Berechnung ---------------- */
+function computeResults(){
+  const perTask=[]; let totalAchievable=0;
+  state.tasks.forEach(t=>{
+    const be=Number(t.be)||0; totalAchievable+=be;
+    const active=(t.criteria||[]).filter(c=>String(c.text).trim()!=="");
+    let achieved=0;
+    active.forEach(c=>{
+      const w=Number(c.weight)||0, f=Number(c.fulfillment)||0;
+      achieved += (be*w/100)*(f/100);
+    });
+    perTask.push(achieved);
+  });
+  const perTaskRounded = perTask.map(a=>Math.round(a));                 // gerundete Werte wie in der Tabelle
+  const totalAchieved = perTaskRounded.reduce((s,x)=>s+x,0);            // Summe AUS den gerundeten Werten
+  const percent = totalAchievable>0 ? totalAchieved/totalAchievable*100 : 0;
+  const t=gradeThresholds();
+  const baseGrade = gradeFromPercent(percent,t);
+  const fiActive = fiIsActive();
+  const errors=Number(state.errors.count)||0, words=Number(state.errors.words)||0;
+  const fehlerindex = words>0 ? errors*100/words : 0;
+  const lo=bandLo(baseGrade,t), hi=bandHi(baseGrade,t);
+  const third=(hi-lo)/3;
+  const thirds = fiActive ? feiThirds(state.setup.grade, fehlerindex) : 0;
+  const adjustedPercent = percent - thirds*third;
+  const finalGrade = gradeFromPercent(adjustedPercent,t);
+  return {perTask,perTaskRounded,totalAchieved,totalAchievable,percent,baseGrade,finalGrade,fehlerindex,fiActive,thirds,third};
+}
+
+function buildResults(){
+  const r=computeResults();
+  $("#res-student").textContent = state.student.name||"";
+  let rows="";
+  state.tasks.forEach((t,i)=>{ rows+=`<tr><td>Aufgabe ${i+1}</td><td class="num">${r.perTaskRounded[i]} / ${fmtNum(t.be)}</td></tr>`; });
+  rows+=`<tr class="total"><td><strong>Summe der erreichten Bewertungseinheiten</strong></td><td class="num"><strong>${r.totalAchieved}</strong> / ${fmtNum(r.totalAchievable)}</td></tr>`;
+  $("#res-summary").innerHTML =
+    `<div class="table-wrap"><table class="grid summary" style="min-width:0"><thead><tr><th>Aufgabe</th><th class="num">Erreichte Bewertungseinheiten</th></tr></thead><tbody>${rows}</tbody></table></div>`+
+    `<p class="muted small" style="margin-top:12px">Gesamtergebnis: <strong>${r.totalAchieved}</strong> von ${fmtNum(r.totalAchievable)} Bewertungseinheiten (${fmtPct(r.percent)}&nbsp;%). Die je Aufgabe angezeigten Werte sind gerundet; die Summe ist die Summe dieser gerundeten Werte und bildet zugleich die Grundlage für Anteil und Note.</p>`;
+  if(r.fiActive){
+    const word = r.thirds===2 ? "zwei Drittel der Note abgezogen" : r.thirds===1 ? "ein Drittel der Note abgezogen" : "kein Abzug";
+    $("#res-fi").style.display="";
+    $("#res-fi").innerHTML = "Fehlerindex: <strong>"+fmtFI(r.fehlerindex)+"</strong> ("+word+")";
+    $("#res-note-without").style.display="";
+    $("#res-note-without").textContent = "Note ohne Berücksichtigung des Fehlerindex: "+r.baseGrade;
+  } else {
+    $("#res-fi").style.display="none";
+    $("#res-note-without").style.display="none";
+  }
+  $("#res-final").innerHTML = "Note: <span class=\"big\">"+r.finalGrade+"</span>";
+}
+
+/* ---------------- Export / Import (versteckte Daten) ---------------- */
+function serializeForExport(){
+  return {
+    v:1, app:"korrigmer-sek1",
+    teacher:{firstName:state.teacher.firstName, lastName:state.teacher.lastName, initials:state.teacher.initials},
+    setup:{className:state.setup.className,subject:state.setup.subject,grade:state.setup.grade,numTasks:state.tasks.length},
+    grades:Object.assign({}, state.grades),
+    student:{name:state.student.name},
+    errors:{count:state.errors.count,words:state.errors.words},
+    tasks: state.tasks.map(t=>({be:t.be, criteria:(t.criteria||[]).map(c=>({text:c.text,fulfillment:c.fulfillment,weight:c.weight}))}))
+  };
+}
+function toB64Utf8(str){
+  const bytes=new TextEncoder().encode(str); let bin=""; const CH=8192;
+  for(let i=0;i<bytes.length;i+=CH){ bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+CH)); }
+  return btoa(bin);
+}
+function fromB64Utf8(b64){
+  const bin=atob(b64); const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function applyImported(d){
+  if(!d||!Array.isArray(d.tasks)) throw new Error("bad data");
+  state.setup.className=(d.setup&&d.setup.className)||"";
+  state.setup.subject =(d.setup&&d.setup.subject)||"";
+  state.setup.grade   =(d.setup&&d.setup.grade)||"";
+  state.tasks = d.tasks.map(t=>({
+    be:Number(t.be)||0,
+    criteria:((Array.isArray(t.criteria)&&t.criteria.length)?t.criteria:[{text:"",fulfillment:"",weight:""}])
+      .map(c=>({text:String(c.text==null?"":c.text), fulfillment:(c.fulfillment==null?"":String(c.fulfillment)), weight:(c.weight===""||c.weight==null)?"":String(c.weight)}))
+  }));
+  state.setup.numTasks=state.tasks.length;
+  state.grades = {};
+  [1,2,3,4,5].forEach(g=>{ const v=d.grades&&d.grades[g]; state.grades[g]=(v!=null&&v!=="")?String(v):String(DEFAULT_GRADES[g]); });
+  state.student.name=(d.student&&d.student.name)||"";
+  state.errors.count=(d.errors&&d.errors.count!=null)?String(d.errors.count):"";
+  state.errors.words=(d.errors&&d.errors.words!=null)?String(d.errors.words):"";
+  $("#in-class").value=state.setup.className;
+  $("#in-subject").value=state.setup.subject;
+  $("#in-grade").value=state.setup.grade;
+  $("#in-numtasks").value=state.setup.numTasks;
+  [1,2,3,4,5].forEach(g=>{ const inp=$('[data-grade="'+g+'"]'); if(inp) inp.value=state.grades[g]; });
+  renderBeTable(state.setup.numTasks);
+  refreshSetupCalc();
+  if($("#in-personal")) $("#in-personal").value="";
+}
+function handleImportFile(file){
+  const st=$("#imp-status");
+  file.arrayBuffer().then(buf=>{
+    try{
+      const bytes=new Uint8Array(buf); let bin=""; const CH=8192;
+      for(let i=0;i<bytes.length;i+=CH){ bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+CH)); }
+      const m="GRADERDATAv1:", endm=":ENDGRADERDATA";
+      const a=bin.indexOf(m); const b=a>=0?bin.indexOf(endm,a):-1;
+      if(a<0||b<0) throw new Error("no marker");
+      const b64=bin.slice(a+m.length,b);
+      const data=JSON.parse(fromB64Utf8(b64));
+      applyImported(data);
+      st.className="imp-ok";
+      st.textContent="✓ Daten aus „"+file.name+"\" geladen. Du kannst unten direkt fortfahren – im nächsten Schritt sind alle Kriterien und Werte bereits eingetragen.";
+    }catch(err){
+      st.className="imp-bad";
+      st.textContent="In dieser Datei konnten keine gespeicherten Daten gefunden werden. Bitte lade eine PDF hoch, die mit diesem Werkzeug erstellt und nicht über eine andere Software erneut gespeichert wurde.";
+    }
+  }).catch(()=>{ st.className="imp-bad"; st.textContent="Die Datei konnte nicht gelesen werden."; });
+}
+
+/* ---------------- PDF-Erzeugung (reines JavaScript, offline) ---------------- */
+const WN={" ":278,"!":278,'"':355,"#":556,"$":556,"%":889,"&":667,"'":191,"(":333,")":333,"*":389,"+":584,",":278,"-":333,".":278,"/":278,"0":556,"1":556,"2":556,"3":556,"4":556,"5":556,"6":556,"7":556,"8":556,"9":556,":":278,";":278,"<":584,"=":584,">":584,"?":556,"@":1015,"A":667,"B":667,"C":722,"D":722,"E":667,"F":611,"G":778,"H":722,"I":278,"J":500,"K":667,"L":556,"M":833,"N":722,"O":778,"P":667,"Q":778,"R":722,"S":667,"T":611,"U":722,"V":667,"W":944,"X":667,"Y":667,"Z":611,"[":278,"\\":278,"]":278,"^":469,"_":556,"`":333,"a":556,"b":556,"c":500,"d":556,"e":556,"f":278,"g":556,"h":556,"i":222,"j":222,"k":500,"l":222,"m":833,"n":556,"o":556,"p":556,"q":556,"r":333,"s":500,"t":278,"u":556,"v":500,"w":722,"x":500,"y":500,"z":500,"{":334,"|":260,"}":334,"~":584,"–":556,"—":1000,"‘":222,"’":222,"‚":222,"“":333,"”":333,"„":333,"•":350,"…":1000,"€":556,"°":400,"ä":556,"ö":556,"ü":556,"ß":556,"Ä":667,"Ö":778,"Ü":722,"é":556,"è":556,"ê":556,"à":556,"á":556,"â":556,"ç":500,"ñ":556,"ó":556,"ú":556,"í":278};
+const WB={" ":278,"!":333,'"':474,"#":556,"$":556,"%":889,"&":722,"'":238,"(":333,")":333,"*":389,"+":584,",":278,"-":333,".":278,"/":278,"0":556,"1":556,"2":556,"3":556,"4":556,"5":556,"6":556,"7":556,"8":556,"9":556,":":333,";":333,"<":584,"=":584,">":584,"?":611,"@":975,"A":722,"B":722,"C":722,"D":722,"E":667,"F":611,"G":778,"H":722,"I":278,"J":556,"K":722,"L":611,"M":833,"N":722,"O":778,"P":667,"Q":778,"R":722,"S":667,"T":611,"U":722,"V":667,"W":944,"X":667,"Y":667,"Z":611,"[":333,"\\":278,"]":333,"^":584,"_":556,"`":333,"a":556,"b":611,"c":556,"d":611,"e":556,"f":333,"g":611,"h":611,"i":278,"j":278,"k":556,"l":278,"m":889,"n":611,"o":611,"p":611,"q":611,"r":389,"s":556,"t":333,"u":611,"v":556,"w":778,"x":556,"y":556,"z":500,"{":389,"|":280,"}":389,"~":584,"–":556,"—":1000,"‘":278,"’":278,"‚":278,"“":500,"”":500,"„":500,"•":350,"…":1000,"€":556,"°":400,"ä":556,"ö":611,"ü":611,"ß":611,"Ä":722,"Ö":778,"Ü":722,"é":556,"è":556,"ê":556,"à":556,"á":556,"â":556,"ç":556,"ñ":611,"ó":611,"ú":611,"í":278};
+const WINSPEC={"€":128,"‚":130,"ƒ":131,"„":132,"…":133,"†":134,"‡":135,"ˆ":136,"‰":137,"Š":138,"‹":139,"Œ":140,"Ž":142,"‘":145,"’":146,"“":147,"”":148,"•":149,"–":150,"—":151,"˜":152,"™":153,"š":154,"›":155,"œ":156,"ž":158,"Ÿ":159};
+
+/* ---- PDF-Verschlüsselung (MD5 + RC4, Standard-Security-Handler V2/R3, 128 Bit) ---- */
+const PAD_PDF=new Uint8Array([0x28,0xBF,0x4E,0x5E,0x4E,0x75,0x8A,0x41,0x64,0x00,0x4E,0x56,0xFF,0xFA,0x01,0x08,0x2E,0x2E,0x00,0xB6,0xD0,0x68,0x3E,0x80,0x2F,0x0C,0xA9,0xFE,0x64,0x53,0x69,0x7A]);
+function strBytes(s){const u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i)&0xff;return u;}
+function bytesBin(b){let o="";for(const x of b)o+=String.fromCharCode(x);return o;}
+function bytesHex(b){let o="";for(const x of b)o+=x.toString(16).padStart(2,"0");return o;}
+function catBytes(){let n=0;for(const a of arguments)n+=a.length;const o=new Uint8Array(n);let k=0;for(const a of arguments){o.set(a,k);k+=a.length;}return o;}
+function le32b(v){const n=v>>>0;return new Uint8Array([n&0xff,(n>>>8)&0xff,(n>>>16)&0xff,(n>>>24)&0xff]);}
+function padPwBytes(pw){const p=(typeof pw==="string")?strBytes(pw):pw;const o=new Uint8Array(32);const n=Math.min(p.length,32);o.set(p.subarray(0,n),0);o.set(PAD_PDF.subarray(0,32-n),n);return o;}
+function xorKeyBytes(key,x){const k=new Uint8Array(key.length);for(let i=0;i<key.length;i++)k[i]=key[i]^x;return k;}
+function pdfMd5(bytes){
+  function rl(x,c){return ((x<<c)|(x>>>(32-c)))>>>0;}
+  const s=[7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+  const K=new Uint32Array(64); for(let i=0;i<64;i++) K[i]=(Math.floor(Math.abs(Math.sin(i+1))*4294967296))>>>0;
+  let a0=0x67452301,b0=0xefcdab89,c0=0x98badcfe,d0=0x10325476;
+  const ml=bytes.length; let total=ml+1; while(total%64!==56) total++; total+=8;
+  const msg=new Uint8Array(total); msg.set(bytes,0); msg[ml]=0x80;
+  const bl=ml*8; msg[total-8]=bl&0xff; msg[total-7]=(bl>>>8)&0xff; msg[total-6]=(bl>>>16)&0xff; msg[total-5]=(bl>>>24)&0xff; msg[total-4]=Math.floor(ml/536870912)&0xff;
+  for(let off=0;off<total;off+=64){
+    const M=new Uint32Array(16);
+    for(let i=0;i<16;i++){ M[i]=((msg[off+i*4])|(msg[off+i*4+1]<<8)|(msg[off+i*4+2]<<16)|(msg[off+i*4+3]<<24))>>>0; }
+    let A=a0,B=b0,C=c0,D=d0;
+    for(let i=0;i<64;i++){
+      let F,g;
+      if(i<16){F=(B&C)|(~B&D);g=i;}
+      else if(i<32){F=(D&B)|(~D&C);g=(5*i+1)%16;}
+      else if(i<48){F=B^C^D;g=(3*i+5)%16;}
+      else {F=C^(B|~D);g=(7*i)%16;}
+      F=(F+A+K[i]+M[g])>>>0; A=D;D=C;C=B; B=(B+rl(F,s[i]))>>>0;
+    }
+    a0=(a0+A)>>>0;b0=(b0+B)>>>0;c0=(c0+C)>>>0;d0=(d0+D)>>>0;
+  }
+  const out=new Uint8Array(16);
+  [a0,b0,c0,d0].forEach((v,i)=>{ out[i*4]=v&0xff; out[i*4+1]=(v>>>8)&0xff; out[i*4+2]=(v>>>16)&0xff; out[i*4+3]=(v>>>24)&0xff; });
+  return out;
+}
+function pdfRc4(key,data){
+  const S=new Uint8Array(256); for(let i=0;i<256;i++)S[i]=i;
+  let j=0; const kl=key.length;
+  for(let i=0;i<256;i++){ j=(j+S[i]+key[i%kl])&0xff; const t=S[i];S[i]=S[j];S[j]=t; }
+  const out=new Uint8Array(data.length); let i=0; j=0;
+  for(let k=0;k<data.length;k++){ i=(i+1)&0xff; j=(j+S[i])&0xff; const t=S[i];S[i]=S[j];S[j]=t; out[k]=data[k]^S[(S[i]+S[j])&0xff]; }
+  return out;
+}
+function pdfComputeO(owner,user){let h=pdfMd5(padPwBytes(owner));for(let i=0;i<50;i++)h=pdfMd5(h.subarray(0,16));const rk=h.subarray(0,16);let out=pdfRc4(rk,padPwBytes(user));for(let i=1;i<=19;i++)out=pdfRc4(xorKeyBytes(rk,i),out);return out;}
+function pdfComputeKey(user,O,P,id){let h=pdfMd5(catBytes(padPwBytes(user),O,le32b(P),id));for(let i=0;i<50;i++)h=pdfMd5(h.subarray(0,16));return h.subarray(0,16);}
+function pdfComputeU(key,id){let out=pdfRc4(key,pdfMd5(catBytes(PAD_PDF,id)).subarray(0,16));for(let i=1;i<=19;i++)out=pdfRc4(xorKeyBytes(key,i),out);const u=new Uint8Array(32);u.set(out.subarray(0,16),0);return u;}
+function pdfObjKey(key,obj,gen){const e=new Uint8Array(key.length+5);e.set(key,0);e[key.length]=obj&0xff;e[key.length+1]=(obj>>8)&0xff;e[key.length+2]=(obj>>16)&0xff;e[key.length+3]=gen&0xff;e[key.length+4]=(gen>>8)&0xff;return pdfMd5(e).subarray(0,Math.min(key.length+5,16));}
+
+function PdfBuilder(){
+  const PW=595.28, PH=841.89, ML=56, MR=56, MT=58, MB=58, UW=PW-ML-MR;
+  const GOLD="0.62 0.50 0.16";
+  const pages=[]; let ops=[]; let y=MT;
+
+  function tw(s,sz,bold){ const t=bold?WB:WN; let x=0; for(const ch of String(s)){ const cw=t[ch]; x+=(cw==null?556:cw); } return x*sz/1000; }
+  function enc(s){
+    let o="";
+    for(const ch of String(s)){
+      let c;
+      if(WINSPEC[ch]!=null) c=WINSPEC[ch];
+      else { const cp=ch.codePointAt(0); c = cp<=255?cp:63; if(c<32) c=32; }
+      if(c===40||c===41||c===92) o+="\\"+String.fromCharCode(c);
+      else o+=String.fromCharCode(c);
+    }
+    return o;
+  }
+  function wrap(s,maxW,sz,bold){
+    s=String(s==null?"":s).replace(/\r/g,"");
+    const out=[];
+    s.split("\n").forEach(para=>{
+      const words=para.split(/\s+/).filter(x=>x.length);
+      if(!words.length){ out.push(""); return; }
+      let line="";
+      for(let word of words){
+        while(tw(word,sz,bold)>maxW){
+          let k=1; while(k<=word.length && tw(word.slice(0,k),sz,bold)<=maxW) k++; k=Math.max(1,k-1);
+          if(line){ out.push(line); line=""; }
+          out.push(word.slice(0,k)); word=word.slice(k);
+        }
+        const test=line?line+" "+word:word;
+        if(tw(test,sz,bold)<=maxW) line=test; else { if(line) out.push(line); line=word; }
+      }
+      if(line) out.push(line);
+    });
+    return out.length?out:[""];
+  }
+  function ensure(h){ if(y+h > PH-MB){ pages.push(ops); ops=[]; y=MT; } }
+  function txt(s,x,topY,sz,bold,color){
+    const py=PH-(topY+sz*0.80);
+    let op="BT ";
+    if(color) op+=color+" rg ";
+    op+="/"+(bold?"F2":"F1")+" "+sz+" Tf 1 0 0 1 "+x.toFixed(2)+" "+py.toFixed(2)+" Tm ("+enc(s)+") Tj ET";
+    ops.push(op);
+  }
+  function ruleAt(topY){ const py=PH-topY; ops.push("0.85 0.83 0.76 RG 0.6 w "+ML.toFixed(2)+" "+py.toFixed(2)+" m "+(ML+UW).toFixed(2)+" "+py.toFixed(2)+" l S"); }
+
+  const api={
+    heading(text,sz,color){ wrap(text,UW,sz,true).forEach(ln=>{ ensure(sz*1.34); txt(ln,ML,y,sz,true,color||GOLD); y+=sz*1.34; }); },
+    line(text,sz,bold,color){ sz=sz||10.5; wrap(text,UW,sz,!!bold).forEach(ln=>{ ensure(sz*1.36); txt(ln,ML,y,sz,!!bold,color||"0 0 0"); y+=sz*1.36; }); },
+    right(text,sz,bold){ sz=sz||10.5; ensure(sz*1.42); txt(text, ML+UW-tw(text,sz,!!bold), y, sz, !!bold, "0.25 0.22 0.16"); y+=sz*1.42; },
+    kv(label,value){ const sz=10.5; ensure(sz*1.5); const lab=label+": "; txt(lab,ML,y,sz,true,"0.30 0.27 0.20"); txt(String(value==null||value===""?"—":value),ML+tw(lab,sz,true),y,sz,false,"0 0 0"); y+=sz*1.5; },
+    rowHeader(a,b){ const sz=9.5; ensure(sz*1.6); const x2=ML+UW*0.50; txt(a,ML,y,sz,true,"0.40 0.36 0.28"); txt(b,x2,y,sz,true,"0.40 0.36 0.28"); y+=sz*1.5; ruleAt(y-3); y+=2; },
+    row(a,b){ const sz=10, lh=sz*1.32, wc1=UW*0.46, x2=ML+UW*0.50, wc2=UW*0.50;
+      const L=wrap(a,wc1,sz,false), R=wrap(b,wc2,sz,false), n=Math.max(L.length,R.length), h=n*lh+7;
+      ensure(h); const sY=y;
+      for(let i=0;i<L.length;i++) txt(L[i],ML,sY+i*lh,sz,false,"0 0 0");
+      for(let i=0;i<R.length;i++) txt(R[i],x2,sY+i*lh,sz,false,"0.32 0.30 0.24");
+      y=sY+h; ruleAt(y-3.5); },
+    space(h){ ensure(h); y+=h; },
+    signLine(leftText,rightText){
+      ensure(38); y+=38;
+      ensure(2); ruleAt(y); y+=4;
+      const sz=9.5; ensure(sz*1.5);
+      txt(leftText, ML, y, sz, false, "0.45 0.43 0.36");
+      txt(rightText, ML+UW-tw(rightText,sz,false), y, sz, false, "0.45 0.43 0.36");
+      y+=sz*1.5;
+    },
+    rule(){ ensure(9); y+=3; ruleAt(y); y+=6; },
+    download(filename,hiddenObj,password){
+      pages.push(ops); ops=[];
+      const P=pages.length, objs=[];
+      const fz="Dieser Rückmeldebogen wurde mit KORRIGMER entwickelt.";
+      for(let p=0;p<P;p++){
+        const fw=tw(fz,8,false);
+        pages[p].push("BT 0.55 0.53 0.46 rg /F1 8 Tf 1 0 0 1 "+((PW-fw)/2).toFixed(2)+" 26 Tm ("+enc(fz)+") Tj ET");
+      }
+      objs[1]="<< /Type /Catalog /Pages 2 0 R >>";
+      const refs=[]; for(let p=0;p<P;p++) refs.push((5+P+p)+" 0 R");
+      objs[2]="<< /Type /Pages /Kids ["+refs.join(" ")+"] /Count "+P+" >>";
+      objs[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+      objs[4]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+      const N=4+2*P;
+      let enc2=null, encNum=0, idHex="";
+      if(password){
+        encNum=N+1;
+        const id=pdfMd5(strBytes("id"+Date.now()+"-"+Math.random()));
+        idHex=bytesHex(id);
+        const Pp=-4;
+        const O=pdfComputeO(password,password);
+        const key=pdfComputeKey(password,O,Pp,id);
+        const U=pdfComputeU(key,id);
+        enc2={key:key,O:O,U:U,P:Pp};
+      }
+      for(let p=0;p<P;p++){
+        const content=pages[p].join("\n");
+        let data=content;
+        if(password) data=bytesBin(pdfRc4(pdfObjKey(enc2.key,5+p,0),strBytes(content)));
+        objs[5+p]="<< /Length "+content.length+" >>\nstream\n"+data+"\nendstream";
+      }
+      for(let p=0;p<P;p++){ objs[5+P+p]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+PW+" "+PH+"] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents "+(5+p)+" 0 R >>"; }
+      if(password){ objs[encNum]="<< /Filter /Standard /V 2 /R 3 /Length 128 /P "+enc2.P+" /O <"+bytesHex(enc2.O)+"> /U <"+bytesHex(enc2.U)+"> >>"; }
+      const total=password?N+1:N;
+      let pdf="%PDF-1.4\n%\xE2\xE3\xCF\xD3\n";
+      const off=[];
+      for(let i=1;i<=total;i++){ off[i]=pdf.length; pdf+= i+" 0 obj\n"+objs[i]+"\nendobj\n"; }
+      const xrefStart=pdf.length;
+      let xref="xref\n0 "+(total+1)+"\n0000000000 65535 f \n";
+      for(let i=1;i<=total;i++){ xref += String(off[i]).padStart(10,"0")+" 00000 n \n"; }
+      pdf+=xref;
+      let trailer="<< /Size "+(total+1)+" /Root 1 0 R";
+      if(password) trailer+=" /Encrypt "+encNum+" 0 R /ID [<"+idHex+"><"+idHex+">]";
+      trailer+=" >>";
+      pdf+="trailer\n"+trailer+"\nstartxref\n"+xrefStart+"\n%%EOF\n";
+      if(hiddenObj){ pdf += "%GRADERDATAv1:"+toB64Utf8(JSON.stringify(hiddenObj))+":ENDGRADERDATA\n"; }
+      const bytes=new Uint8Array(pdf.length);
+      for(let i=0;i<pdf.length;i++) bytes[i]=pdf.charCodeAt(i)&0xff;
+      const blob=new Blob([bytes],{type:"application/pdf"});
+      const url=URL.createObjectURL(blob), a=document.createElement("a");
+      a.href=url; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),2000);
+    }
+  };
+  return api;
+}
+
+function generatePDF(){
+  const r=computeResults();
+  const b=PdfBuilder();
+  b.heading("Rückmeldung zur Bewertung",18);
+  b.space(3);
+  b.kv("Name", state.student.name);
+  if(state.setup.className) b.kv("Klasse", state.setup.className);
+  if(state.setup.subject)  b.kv("Fach", state.setup.subject);
+  if(state.setup.grade)    b.kv("Jahrgang", state.setup.grade);
+  const _corrInitial=(state.teacher.firstName||"").trim().charAt(0).toUpperCase();
+  b.kv("Korrigiert von", ((_corrInitial?_corrInitial+". ":"")+(state.teacher.lastName||"")).trim());
+  b.kv("Datum", new Date().toLocaleDateString("de-DE"));
+  b.rule();
+  state.tasks.forEach((t,i)=>{
+    const active=(t.criteria||[]).filter(c=>String(c.text).trim()!=="");
+    b.space(7);
+    b.heading("Aufgabe "+(i+1)+"   ("+fmtNum(t.be)+" erreichbare Bewertungseinheiten)",12.5);
+    b.space(1);
+    b.rowHeader("Kriterium","Einordnung");
+    if(!active.length) b.line("— keine Kriterien eingetragen —",9.5,false,"0.5 0.5 0.5");
+    active.forEach(c=>{ b.row(c.text, feedbackTier(c.fulfillment).text); });
+    b.space(2);
+    b.right("Erreichte Bewertungseinheiten: "+r.perTaskRounded[i]+" von "+fmtNum(t.be),10.5,true);
+  });
+  b.rule();
+  b.space(2);
+  if(r.fiActive){
+    b.line("Sprachliche Fehler: "+(Number(state.errors.count)||0));
+    b.line("Wörter: "+(Number(state.errors.words)||0));
+    const word = r.thirds===2 ? "zwei Drittel der Note abgezogen" : r.thirds===1 ? "ein Drittel der Note abgezogen" : "kein Abzug";
+    b.line("Fehlerindex: "+fmtFI(r.fehlerindex)+"   ("+word+")");
+  }
+  b.line("Erreichte Bewertungseinheiten gesamt: "+r.totalAchieved+" von "+fmtNum(r.totalAchievable)+"   ("+fmtPct(r.percent)+" %)");
+  b.space(3);
+  if(r.fiActive){
+    b.line("Note ohne Berücksichtigung des Fehlerindex: "+r.baseGrade,10.5,false,"0.45 0.43 0.36");
+    b.space(1);
+  }
+  b.heading("Note: "+r.finalGrade,16,"0 0 0");
+  const _personal=($("#in-personal")?$("#in-personal").value:"").trim();
+  if(_personal){
+    b.space(4);
+    b.rule();
+    b.heading("Persönliche Worte",12.5);
+    b.space(1);
+    b.line(_personal,10.5);
+  }
+  const _now=new Date();
+  const _wd=_now.toLocaleDateString("de-DE",{weekday:"long"});
+  const _ds=_now.toLocaleDateString("de-DE");
+  b.signLine(_wd+", "+_ds, "Unterschrift der Lehrkraft");
+  const fname="Rueckmeldung_"+String(state.student.name||"Schueler").replace(/[^\w\-]+/g,"_")+".pdf";
+  b.download(fname, serializeForExport(), state.teacher.code||"");
+}
+
+/* ---------------- Navigation ---------------- */
+function showScreen(id){
+  $$(".screen").forEach(s=>s.classList.remove("active"));
+  $("#screen-"+id).classList.add("active");
+  $(".app-header").style.display = (id==="login") ? "none" : "flex";
+  window.scrollTo(0,0);
+}
+
+/* ---------------- Ereignisse ---------------- */
+$("#btn-login").addEventListener("click",doLogin);
+["in-firstname","in-lastname","in-initials","in-code"].forEach(id=>{
+  $("#"+id).addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
+});
+
+$("#in-numtasks").addEventListener("input",e=>{ renderBeTable(parseInt(e.target.value)||0); });
+$("#be-table-wrap").addEventListener("input",refreshSetupCalc);
+$("#gradekey-card").addEventListener("input",refreshSetupCalc);
+
+$("#imp-file").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0];
+  if(f) handleImportFile(f);
+  e.target.value="";
+});
+
+$("#btn-toGrading").addEventListener("click",()=>{
+  const errs=validateSetup();
+  $("#setup-error").textContent = errs.length? errs.map(x=>"• "+x).join("\n") : "";
+  if(errs.length) return;
+  serializeSetup();
+  buildGrading();
+  showScreen("grading");
+});
+
+$("#btn-back-setup").addEventListener("click",()=>{ serializeGrading(); buildSetup(); showScreen("setup"); });
+
+$("#tasks-wrap").addEventListener("click",e=>{
+  const add=e.target.closest(".add-row");
+  if(add){ const i=add.dataset.add; const tb=$('[data-tbody="'+i+'"]'); tb.insertAdjacentHTML("beforeend", rowHTML(i,{text:"",fulfillment:"",weight:""})); refreshGrading(); return; }
+  const del=e.target.closest(".del-row");
+  if(del){ const row=del.closest(".krow"); row.remove(); refreshGrading(); return; }
+});
+$("#tasks-wrap").addEventListener("input",refreshGrading);
+$("#tasks-wrap").addEventListener("change",refreshGrading);
+$("#in-studentname").addEventListener("input",updateAnschauen);
+$("#in-errors").addEventListener("input",updateErrorIndex);
+$("#in-words").addEventListener("input",updateErrorIndex);
+
+$("#btn-anschauen").addEventListener("click",()=>{
+  if($("#btn-anschauen").disabled) return;
+  serializeGrading();
+  buildResults();
+  showScreen("results");
+});
+$("#btn-back-grading").addEventListener("click",()=>{ buildGrading(); showScreen("grading"); });
+$("#btn-print").addEventListener("click",generatePDF);
+
+/* Zurücksetzen mit Bestätigung */
+$("#btn-reset").addEventListener("click",()=>{ $("#reset-modal").classList.add("open"); });
+$("#btn-reset-cancel").addEventListener("click",()=>{ $("#reset-modal").classList.remove("open"); });
+$("#btn-reset-confirm").addEventListener("click",()=>{
+  state.tasks.forEach(t=>{ t.criteria=[{text:"",fulfillment:"",weight:""}]; });
+  state.student.name=""; state.errors.count=""; state.errors.words="";
+  if($("#in-personal")) $("#in-personal").value="";
+  buildGrading();
+  $("#reset-modal").classList.remove("open");
+});
+$("#reset-modal").addEventListener("click",e=>{ if(e.target===$("#reset-modal")) $("#reset-modal").classList.remove("open"); });
+
+/* Nur die Einschätzungen (Spalte 3) aller Tabellen leeren */
+$("#btn-reset-col3").addEventListener("click",()=>{
+  $$("#tasks-wrap .erf").forEach(sel=>{ sel.value=""; });
+  refreshGrading();
+});
+
+/* Abmelden */
+$("#btn-logout").addEventListener("click",()=>{
+  if(!confirm("Wirklich abmelden? Nicht gespeicherte Eingaben gehen verloren.")) return;
+  state=initialState();
+  ["in-firstname","in-lastname","in-initials","in-code","in-class","in-subject","in-grade","in-numtasks","in-studentname","in-errors","in-words","in-personal"].forEach(id=>{ const el=$("#"+id); if(el) el.value=""; });
+  $("#be-table-wrap").innerHTML=""; $("#tasks-wrap").innerHTML="";
+  $("#login-error").textContent=""; $("#setup-error").textContent="";
+  $("#imp-status").textContent=""; $("#imp-status").className="";
+  showScreen("login");
+});
+
+showScreen("login");
+</script>
+</body>
+</html>

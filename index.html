@@ -643,13 +643,13 @@ function buildResults(){
 }
 
 /* ---------------- Export / Import (versteckte Daten) ---------------- */
+// Die Daten zum Weiterarbeiten enthalten bewusst keine Namen (weder Lehrkraft noch Schülerin/Schüler):
+// Sie stehen ohne wirksamen Schutz in der PDF.
 function serializeForExport(){
   return {
     v:1, app:"korrigmer-sek1",
-    teacher:{firstName:state.teacher.firstName, lastName:state.teacher.lastName, initials:state.teacher.initials},
     setup:{className:state.setup.className,subject:state.setup.subject,grade:state.setup.grade,numTasks:state.tasks.length},
     grades:Object.assign({}, state.grades),
-    student:{name:state.student.name},
     errors:{count:state.errors.count,words:state.errors.words},
     tasks: state.tasks.map(t=>({be:t.be, criteria:(t.criteria||[]).map(c=>({text:c.text,fulfillment:c.fulfillment,weight:c.weight}))}))
   };
@@ -702,7 +702,7 @@ function handleImportFile(file){
       const data=JSON.parse(fromB64Utf8(b64));
       applyImported(data);
       st.className="imp-ok";
-      st.textContent="✓ Daten aus „"+file.name+"\" geladen. Du kannst unten direkt fortfahren – im nächsten Schritt sind alle Kriterien und Werte bereits eingetragen.";
+      st.textContent="✓ Daten aus „"+file.name+"\" geladen. Du kannst unten direkt fortfahren – im nächsten Schritt sind alle Kriterien und Werte bereits eingetragen. Den Namen der Schülerin bzw. des Schülers trägst du neu ein.";
     }catch(err){
       st.className="imp-bad";
       st.textContent="In dieser Datei konnten keine gespeicherten Daten gefunden werden. Bitte lade eine PDF hoch, die mit diesem Werkzeug erstellt und nicht über eine andere Software erneut gespeichert wurde.";

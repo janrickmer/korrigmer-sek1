@@ -835,11 +835,11 @@ function PdfBuilder(){
       y=sY+h; ruleAt(y-3.5); },
     space(h){ ensure(h); y+=h; },
     signLine(leftText,rightText){
-      ensure(38); y+=38;
-      ensure(2); ruleAt(y); y+=4;
-      const sz=9.5; ensure(sz*1.5);
-      txt(leftText, ML, y, sz, false, "0.45 0.43 0.36");
-      txt(rightText, ML+UW-tw(rightText,sz,false), y, sz, false, "0.45 0.43 0.36");
+      const sz=9.5;
+      ensure(38+4+sz*1.5); y+=38;   // Linie und Beschriftung bleiben auf derselben Seite
+      ruleAt(y); y+=4;
+      if(leftText) txt(leftText, ML, y, sz, false, "0.45 0.43 0.36");
+      if(rightText) txt(rightText, ML+UW-tw(rightText,sz,false), y, sz, false, "0.45 0.43 0.36");
       y+=sz*1.5;
     },
     rule(){ ensure(9); y+=3; ruleAt(y); y+=6; },
@@ -951,6 +951,7 @@ function generatePDF(){
   const _wd=_now.toLocaleDateString("de-DE",{weekday:"long"});
   const _ds=_now.toLocaleDateString("de-DE");
   b.signLine(_wd+", "+_ds, "Unterschrift der Lehrkraft");
+  b.signLine("", "Unterschrift eines / einer Erziehungsberechtigten");
   const fname="Rueckmeldung_"+String(state.student.name||"Schueler").replace(/[^\w\-]+/g,"_")+".pdf";
   b.download(fname, serializeForExport(), state.teacher.code||"");
 }

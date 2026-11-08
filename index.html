@@ -87,7 +87,7 @@ table.grid tbody tr:last-child td{border-bottom:none}
 .be-unit{color:var(--muted);font-size:13.5px}
 
 .col-krit{width:29%}.col-ein{width:29%}.col-erf{width:19%}.col-gew{width:19%}.col-del{width:1%;white-space:nowrap}
-.krit{min-height:44px}
+.krit{min-height:44px;resize:none;overflow-y:hidden}
 .gewcell{white-space:nowrap}
 .gewcell input.gew{max-width:80px;display:inline-block}
 .pct{margin-left:6px;color:var(--muted);font-weight:600}
@@ -518,6 +518,15 @@ function rowHTML(taskIdx,c){
     <td><button type="button" class="btn danger small del-row">Kriterium löschen</button></td>
   </tr>`;
 }
+/* Kriterium-Felder passen ihre Höhe an den Text an (kein Scrollen im Feld) */
+function autosizeKrit(el){
+  if(!el.offsetParent) return; /* ausgeblendet: Höhe nicht messbar */
+  const y=window.scrollY;
+  el.style.height="auto";
+  el.style.height=(el.scrollHeight + el.offsetHeight - el.clientHeight)+"px";
+  if(window.scrollY!==y) window.scrollTo(0,y);
+}
+function autosizeAllKrit(){ $$("#tasks-wrap textarea.krit").forEach(autosizeKrit); }
 function taskTableHTML(i,t){
   const rows = (t.criteria&&t.criteria.length)?t.criteria:[{text:"",fulfillment:"",weight:""}];
   let body=""; rows.forEach(c=>{ body+=rowHTML(i,c); });
@@ -547,6 +556,7 @@ function buildGrading(){
   $("#tasks-wrap").innerHTML=html;
   $("#name-error").textContent="";
   refreshGrading();
+  autosizeAllKrit();
 }
 function serializeGrading(){
   state.student.name=$("#in-studentname").value;
@@ -961,6 +971,7 @@ function showScreen(id){
   $$(".screen").forEach(s=>s.classList.remove("active"));
   $("#screen-"+id).classList.add("active");
   $(".app-header").style.display = (id==="login") ? "none" : "flex";
+  if(id==="grading") autosizeAllKrit();
   window.scrollTo(0,0);
 }
 
@@ -997,7 +1008,12 @@ $("#tasks-wrap").addEventListener("click",e=>{
   const del=e.target.closest(".del-row");
   if(del){ const row=del.closest(".krow"); row.remove(); refreshGrading(); return; }
 });
-$("#tasks-wrap").addEventListener("input",refreshGrading);
+$("#tasks-wrap").addEventListener("input",e=>{
+  if(e.target.matches("textarea.krit")) autosizeKrit(e.target);
+  refreshGrading();
+});
+let kritResizeRaf=0;
+window.addEventListener("resize",()=>{ cancelAnimationFrame(kritResizeRaf); kritResizeRaf=requestAnimationFrame(autosizeAllKrit); });
 $("#tasks-wrap").addEventListener("change",refreshGrading);
 $("#in-studentname").addEventListener("input",updateAnschauen);
 $("#in-errors").addEventListener("input",updateErrorIndex);
